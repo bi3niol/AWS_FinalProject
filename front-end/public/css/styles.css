@@ -1,0 +1,134 @@
+body {
+  margin: 0;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+}
+footer,
+header {
+  background-color: rgb(52, 126, 245);
+  height: 60px;
+  color: white;
+  position: sticky;
+}
+header {
+  top: 0;
+  bottom: auto;
+  color: white;
+  box-shadow: 0 1px 15px black;
+  z-index: 100;
+}
+footer {
+  position: relative;
+  box-shadow: 0 -1px 15px black;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.brand-header {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  cursor: default;
+  padding-left: 7%;
+}
+.brand-header span {
+  margin-left: 20px;
+  font-size: 2rem;
+  letter-spacing: 5px;
+}
+.brand-header .i-photos:hover {
+  animation: 0.8s rotateElement alternate;
+}
+@keyframes rotateElement {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+#preloader {
+  position: sticky;
+  background-color: rgb(52, 126, 245);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  margin-bottom: -60px;
+  transition: 1.5s;
+  align-items: center;
+}
+
+#preloader span {
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  opacity: 0.3;
+}
+.content-loaded {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.preloader-picture,
+.preloader-user,
+.preloader-web {
+  background: inherit;
+  position: absolute;
+  height: 40%;
+  max-height: 20vw;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.preloader-picture {
+  position: absolute;
+  height: 20%;
+  max-height: 10vw;
+  animation: sendPicture 2.5s infinite;
+}
+.preloader-user {
+  left: 10%;
+}
+.preloader-web {
+  right: 10%;
+  height: 60%;
+}
+
+@keyframes sendPicture {
+  0% {
+    left: 30%;
+  }
+  70% {
+    left: 53%;
+    opacity: 1;
+  }
+  100% {
+    left: 55%;
+    opacity: 0;
+  }
+}
+@keyframes topDown {
+  from {
+    transform: translate(-50%, 50%);
+  }
+  to {
+    transform: translate(-50%, 0);
+  }
+}
+.top-down-animation {
+  animation: topDown 0.75s infinite alternate;
+}
+.i-chevron-bottom {
+  content: url("../images/chevron-bottom.svg");
+  height: 7vh;
+  width: auto;
+}
+.i-photos {
+  content: url("../images/photo.svg");
+  height: 50px;
+}
