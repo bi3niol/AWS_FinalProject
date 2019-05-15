@@ -25,7 +25,11 @@ footer {
   justify-content: center;
   align-items: center;
 }
-
+.aws-logo {
+  position: absolute;
+  top: 0;
+  right: 50px;
+}
 .brand-header {
   height: 100%;
   display: flex;
@@ -51,7 +55,6 @@ footer {
   }
 }
 #preloader {
-  position: sticky;
   background-color: rgb(52, 126, 245);
   top: 0;
   left: 0;
