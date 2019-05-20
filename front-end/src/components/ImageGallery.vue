@@ -1,15 +1,18 @@
 <template>
 <div>
     <div class="images">
-        <div class="image" v-for="(src,id) in images" :key="id" @click="()=>show(id)">
+        <div class="image" v-for="(image,id) in images" :key="id" @click="()=>show(id)">
             <div>
-                <img :src="src"/>
+              <div class="image-description">
+                Cat : 80%
+              </div>
+              <img :src="image"/>
             </div>
         </div>
     </div>
     <vue-easy-lightbox
         :visible="visible"
-        :imgs="images"
+        :imgs="srcs"
         :index="index"
         @hide="handleHide"
       ></vue-easy-lightbox>
@@ -34,6 +37,11 @@ export default {
       this.index = index;
       this.visible = true;
     }
+  },
+  computed: {
+    srcs() {
+      return this.images;
+    }
   }
 };
 </script>
@@ -42,7 +50,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: top;
+  align-items: center;
 }
 .image div {
   margin: 10px;
@@ -61,5 +69,13 @@ export default {
   margin: -5px;
   opacity: 1;
   box-shadow: 0 0 10px 0px black;
+}
+.image {
+  position: relative;
+}
+.image-description {
+  position: absolute;
+  pointer-events: none;
+  bottom: 0;
 }
 </style>

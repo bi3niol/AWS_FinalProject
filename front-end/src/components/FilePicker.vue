@@ -101,11 +101,11 @@ input[type="file"] {
 .file-picker {
   border: 2px rgb(0, 0, 0, 0.6) dashed;
   border-radius: 10px;
-  opacity: 0.6;
+  opacity: 0.7;
   text-align: center;
   max-height: 30vh;
   min-height: 150px;
-  background-color: rgb(175, 219, 255);
+  background-color: rgb(52, 126, 245);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -124,14 +124,14 @@ input[type="file"] {
     opacity: 0.9;
   }
 }
-
+.drop-area:hover,
 .drag-entered {
   transition: 0.5s;
   background: repeating-linear-gradient(
     45deg,
     rgb(175, 219, 255),
     rgb(175, 219, 255) 30px,
-    rgba(52, 126, 245) 30px,
+    rgb(52, 126, 245) 30px,
     rgba(52, 126, 245) 60px
   );
   animation: moveBackground 3s infinite;
@@ -152,6 +152,7 @@ input[type="file"] {
 
 .drop-area {
   flex-grow: 1;
+  transition: 0.5s;
   padding: 30px;
   cursor: pointer;
   background-size: cover;

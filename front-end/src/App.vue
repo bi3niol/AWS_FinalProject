@@ -1,11 +1,16 @@
 <template>
   <div id="app">
     <div class="file-upload-site">
-      <file-picker :upload="checkImage"></file-picker>
+      <file-picker :upload="classifyImage"></file-picker>
     </div>
-    <div class="statistics-data">d</div>
-    <div class="last-classified-images">
+    <div class="statistics-data">
+      <div class="app-title">Most frequently returned results</div>
       <hr/>
+      <bar-chart
+        :chart-data="chartData">
+      </bar-chart>
+    </div>
+    <div class="last-classified-images">
       <span class="app-title">Last classified images</span>
       <hr/>
       <image-gallery :images="images"></image-gallery>
@@ -16,11 +21,13 @@
 <script>
 import FilePicker from "./components/FilePicker";
 import ImageGallery from "./components/ImageGallery";
+import BarChart from "./components/BarChart";
 export default {
   name: "app",
-  components: { FilePicker, ImageGallery },
+  components: { FilePicker, ImageGallery, BarChart },
   data() {
     return {
+      chartData: null,
       images: [
         "https://via.placeholder.com/450.png/",
         "https://via.placeholder.com/250x400.png/",
@@ -45,8 +52,30 @@ export default {
       ]
     };
   },
+  mounted() {
+    this.chartData = {
+      labels: [
+        "test1",
+        "test2",
+        "test3",
+        "test4",
+        "test5",
+        "test6",
+        "test7",
+        "test8",
+        "test9"
+      ],
+      datasets: [
+        {
+          label: "class count",
+          backgroundColor: "rgb(52, 126, 245)",
+          data: [12, 23, 4, 17, 15, 1, 9, 5, 20]
+        }
+      ]
+    };
+  },
   methods: {
-    checkImage(file) {
+    classifyImage(file) {
       console.log(file);
     }
   }
@@ -71,6 +100,16 @@ export default {
     "statisticsData"
     "imageGalery";
 }
+
+.statistics-data {
+  max-width: 700px;
+  max-height: 600px;
+  text-align: center;
+  margin: 0 auto;
+  padding-top: 20px;
+  grid-area: statisticsData;
+}
+
 @media only screen and (min-width: 700px) {
   #app {
     padding-top: 50px;
@@ -79,14 +118,22 @@ export default {
       "imageGalery imageGalery imageGalery";
   }
 }
-
+.statistics-data > span {
+  font-size: 2rem;
+}
 .file-upload-site {
   grid-area: fileSite;
+  min-width: 400px;
   padding: 0 20px;
 }
-.statistics-data {
-  background-color: brown;
-  grid-area: statisticsData;
+.statistics-data,
+.last-classified-images {
+  transition: 0.5s;
+  opacity: 0.7;
+}
+.statistics-data:hover,
+.last-classified-images:hover {
+  opacity: 1;
 }
 .last-classified-images {
   padding-top: 20px;
@@ -96,7 +143,6 @@ export default {
 .app-title {
   font-size: 2rem;
   letter-spacing: 5px;
-  display: block;
-  background-color: rgb(177, 177, 177);
+  pointer-events: none;
 }
 </style>
