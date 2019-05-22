@@ -1,6 +1,6 @@
 <template>
   <form class="file-picker" ref="form">
-    <div ref="fileDropArea" class="drop-area" v-on:drop="fileDropped">
+    <div ref="fileDropArea" class="drop-area has-not-image" v-on:drop="fileDropped">
       <label for="filePickerInput">
           <span v-if="!hasFile">
             Click or drop a file...
@@ -10,7 +10,6 @@
           </span>
       </label>
       <input type="file" id="filePickerInput" name="file" v-on:change="fileDropped" ref="filePickerInput">
-      <img ref="filePreview"/>
     </div>
     <v-btn color="primary" v-on:click="submit" flat>Classify</v-btn>
   </form>
@@ -51,9 +50,11 @@ export default {
           "background-image",
           "url('" + URL.createObjectURL(this.file) + "')"
         );
+        $(this.$refs.fileDropArea).removeClass("has-not-image");
       } else {
         this.file = null;
         $(this.$refs.fileDropArea).css("background-image", "");
+        $(this.$refs.fileDropArea).addClass("has-not-image");
       }
       if (this.onFileChanged) {
         this.onFileChanged(this.file);
@@ -124,7 +125,7 @@ input[type="file"] {
     opacity: 0.9;
   }
 }
-.drop-area:hover,
+.has-not-image.drop-area:hover,
 .drag-entered {
   transition: 0.5s;
   background: repeating-linear-gradient(
@@ -134,20 +135,8 @@ input[type="file"] {
     rgb(52, 126, 245) 30px,
     rgba(52, 126, 245) 60px
   );
-  animation: moveBackground 3s infinite;
+  /* animation: moveBackground 3s infinite; */
   opacity: 1;
-}
-
-@keyframes moveBackground {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
 }
 
 .drop-area {
@@ -163,5 +152,17 @@ input[type="file"] {
 .drop-area label {
   font-size: 2em;
   pointer-events: none;
+}
+
+@keyframes moveBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 </style>

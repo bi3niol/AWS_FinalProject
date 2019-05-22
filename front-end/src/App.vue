@@ -77,6 +77,15 @@ export default {
   methods: {
     classifyImage(file) {
       console.log(file);
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        console.log("reader.result");
+        console.log(reader.result.replace(/^data:(.*;base64,)?/, ""));
+      };
+      reader.onerror = error => {
+        console.log("Error: ", error);
+      };
     }
   }
 };
