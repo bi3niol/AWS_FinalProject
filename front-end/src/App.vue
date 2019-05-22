@@ -22,6 +22,8 @@
 import FilePicker from "./components/FilePicker";
 import ImageGallery from "./components/ImageGallery";
 import BarChart from "./components/BarChart";
+import $ from "jquery";
+
 export default {
   name: "app",
   components: { FilePicker, ImageGallery, BarChart },
@@ -77,11 +79,29 @@ export default {
   methods: {
     classifyImage(file) {
       console.log(file);
+      if (!file) {
+        return;
+      }
       var reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
         console.log("reader.result");
-        console.log(reader.result.replace(/^data:(.*;base64,)?/, ""));
+        $.ajax({
+          type: "POST",
+          url:
+            "https://0oanfqjnbg.execute-api.us-east-1.amazonaws.com/chmury/classifyimage",
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          data: JSON.stringify({
+            filename: file.name,
+            contenttype: file.type,
+            imagedata: reader.result.replace(/^data:(.*;base64,)?/, "")
+          }),
+          success: (data, status) => {
+            console.log(data);
+            console.log(status);
+          }
+        });
       };
       reader.onerror = error => {
         console.log("Error: ", error);
