@@ -1,7 +1,12 @@
 <template>
   <div id="app">
     <div class="file-upload-site">
-      <file-picker :upload="classifyImage"></file-picker>
+      <file-picker :upload="classifyImage">
+        <div class="loader-container">
+          <div class="loader"></div>
+        </div>
+      </file-picker>
+      <result-presenter :result="resultOfClassification"></result-presenter>
     </div>
     <div class="statistics-data">
       <div class="app-title">Most frequently returned results</div>
@@ -22,14 +27,28 @@
 import FilePicker from "./components/FilePicker";
 import ImageGallery from "./components/ImageGallery";
 import BarChart from "./components/BarChart";
+import ResultPresenter from "./components/ResultPresenter";
 import $ from "jquery";
+import config from "./config.js";
+import Vue from "vue";
 
 export default {
   name: "app",
-  components: { FilePicker, ImageGallery, BarChart },
+  components: { FilePicker, ImageGallery, BarChart, ResultPresenter },
   data() {
     return {
-      chartData: null,
+      toastedOptions: {
+        position: "top-center",
+        containerClass: "text-center",
+        duration: 3000
+      },
+      resultOfClassification: {
+        labels: []
+      },
+      chartData: {
+        labels: [],
+        datasets: []
+      },
       images: [
         "https://via.placeholder.com/450.png/",
         "https://via.placeholder.com/250x400.png/",
@@ -55,6 +74,15 @@ export default {
     };
   },
   mounted() {
+    $(".to-content-arrow").on("click", function(e) {
+      $("html, body").animate(
+        {
+          scrollTop: parseInt($("#app").offset().top)
+        },
+        1000
+      );
+    });
+    console.log(config);
     this.chartData = {
       labels: [
         "test1",
@@ -77,31 +105,52 @@ export default {
     };
   },
   methods: {
+    setLoader(isLoading) {
+      if (isLoading) {
+        $(".loader-container").addClass("request-inprogress");
+      } else {
+        $(".loader-container").removeClass("request-inprogress");
+      }
+    },
     classifyImage(file) {
       console.log(file);
       if (!file) {
         return;
       }
+      this.resultOfClassification = { labels: [] };
+      this.setLoader(true);
       var reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
         console.log("reader.result");
         $.ajax({
           type: "POST",
-          url:
-            "https://0oanfqjnbg.execute-api.us-east-1.amazonaws.com/chmury/classifyimage",
+          url: config.CLASSIFY_IMG_URL,
           contentType: "application/json; charset=utf-8",
           dataType: "json",
           data: JSON.stringify({
             filename: file.name,
             contenttype: file.type,
             imagedata: reader.result.replace(/^data:(.*;base64,)?/, "")
-          }),
-          success: (data, status) => {
+          })
+        })
+          .done((data, status) => {
             console.log(data);
-            console.log(status);
-          }
-        });
+            this.resultOfClassification.labels = data;
+            Vue.toasted.success(
+              "Success : found " +
+                this.resultOfClassification.labels.length +
+                " labels",
+              this.toastedOptions
+            );
+          })
+          .fail(err => {
+            console.error(err);
+            Vue.toasted.error("Error : " + err.message, this.toastedOptions);
+          })
+          .always(() => {
+            this.setLoader(false);
+          });
       };
       reader.onerror = error => {
         console.log("Error: ", error);
@@ -112,6 +161,9 @@ export default {
 </script>
 
 <style>
+.text-center {
+  padding: 20px;
+}
 #app {
   position: relative;
   background: white;
@@ -124,6 +176,7 @@ export default {
   min-height: 100vh;
   /* margin-bottom: -60px; */
   padding-top: 20px;
+
   grid-template:
     "fileSite"
     "statisticsData"
@@ -151,9 +204,12 @@ export default {
   font-size: 2rem;
 }
 .file-upload-site {
+  position: relative;
   grid-area: fileSite;
-  min-width: 400px;
   padding: 0 20px;
+}
+.file-picker {
+  min-width: 400px;
 }
 .statistics-data,
 .last-classified-images {
@@ -173,5 +229,47 @@ export default {
   font-size: 2rem;
   letter-spacing: 5px;
   pointer-events: none;
+}
+
+.request-inprogress {
+  display: block !important;
+}
+
+.loader-container {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  padding-top: 10px;
+}
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid blue;
+  border-bottom: 16px solid blue;
+  width: 60px;
+  height: 60px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

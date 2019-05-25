@@ -12,6 +12,7 @@
       <input type="file" id="filePickerInput" name="file" v-on:change="fileDropped" ref="filePickerInput">
     </div>
     <v-btn color="primary" v-on:click="submit" flat>Classify</v-btn>
+    <slot></slot>
   </form>
 
 </template>

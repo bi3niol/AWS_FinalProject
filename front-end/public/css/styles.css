@@ -28,6 +28,8 @@ footer > div {
 }
 .aws-logo {
   position: absolute;
+  width: 20vw;
+  min-width: 150px;
   top: 0;
   right: 50px;
 }
@@ -124,6 +126,9 @@ footer > div {
   to {
     transform: translate(-50%, 0);
   }
+}
+.to-content-arrow {
+  cursor: pointer;
 }
 .top-down-animation {
   animation: topDown 0.75s infinite alternate;
