@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>664ec2e2-e732-4b4e-8c34-022293b6baa2</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>api\classify_image.py</StartupFile>
+    <StartupFile>test.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -32,6 +32,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="data_repository.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="test.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

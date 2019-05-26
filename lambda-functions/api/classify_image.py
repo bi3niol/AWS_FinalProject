@@ -5,7 +5,7 @@ from pathlib import Path
 import base64
 import os
 #########
-from "../data_repository" import * as dal
+import data_repository as dal
 #########
 BUCKET_NAME = os.environ["BUCKET_NAME"]  # "chmury.website.images"
 IMAGE_FOLDER_PATH = Path(os.environ["IMAGE_FOLDER_PATH"])  # "images"
@@ -52,6 +52,7 @@ def lambda_handler(event, context):
         MaxLabels=123
     )
     # print(response)
+    dal.add_classified_image(str(bucketFilePath),BUCKET_NAME,response["Labels"])
 
     return {
         'headers': {
