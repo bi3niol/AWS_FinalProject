@@ -104,19 +104,19 @@ export default {
       ]
     };
 
-    $.ajax({
-      url: config.GET_PAGE_DATA_URL,
-      type: "GET",
-      data: {
-        topLabelsCount: 20,
-        imageCount: 20
-      }
-    })
-      .done((data, status) => {
-        console.log(data);
-      })
-      .fail(this.onRequestFail)
-      .always(this.always);
+    // $.ajax({
+    //   url: config.GET_PAGE_DATA_URL,
+    //   type: "GET",
+    //   data: {
+    //     topLabelsCount: 20,
+    //     imageCount: 20
+    //   }
+    // })
+    //   .done((data, status) => {
+    //     console.log(data);
+    //   })
+    //   .fail(this.onRequestFail)
+    //   .always(this.always);
   },
   methods: {
     setLoader(isLoading) {

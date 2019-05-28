@@ -27,37 +27,49 @@ reko = boto3.client('rekognition')
 
 
 def lambda_handler(event, context):
-    model = json.loads(event["body"])
-    filename = model["filename"]
-    imagedata = model["imagedata"]
-
-    localFile: Path = save_to_local_file(filename, imagedata)
-
-    unique_filename = f"{str(uuid.uuid4())}_{filename}"
-
-    bucketFilePath = IMAGE_FOLDER_PATH / unique_filename
-
-    s3.meta.client.upload_file(
-        str(localFile), BUCKET_NAME, str(bucketFilePath))
-
-    response = reko.detect_labels(
-        Image={
-            'S3Object': {
-                'Bucket': BUCKET_NAME,
-                'Name': str(bucketFilePath)
-            }
-        },
-        MaxLabels=123
-    )
-    # print(response)
-    dal.add_classified_image(
-        str(bucketFilePath), BUCKET_NAME, response["Labels"])
-
-    return {
-        'headers': {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Headers": "Content-Type",
-            "Access-Control-Allow-Methods": "POST"
-        },
-        'body': json.dumps(response["Labels"])
-    }
+    error = 0
+    try:
+        model = json.loads(event["body"])
+        filename = model["filename"]
+        imagedata = model["imagedata"]
+        error = 1
+        localFile: Path = save_to_local_file(filename, imagedata)
+        error = 2
+        unique_filename = f"{str(uuid.uuid4())}_{filename}"
+        error = 3
+        bucketFilePath = IMAGE_FOLDER_PATH / unique_filename
+        error = 4
+        s3.meta.client.upload_file(
+            str(localFile), BUCKET_NAME, str(bucketFilePath))
+        error = 5
+        response = reko.detect_labels(
+            Image={
+                'S3Object': {
+                    'Bucket': BUCKET_NAME,
+                    'Name': str(bucketFilePath)
+                }
+            },
+            MaxLabels=123
+        )
+        error = 6
+        # print(response)
+        dal.add_classified_image(str(bucketFilePath), BUCKET_NAME, response["Labels"])
+        error = 7
+        return {
+            'headers': {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "Content-Type",
+                "Access-Control-Allow-Methods": "POST"
+            },
+            'body': json.dumps(response["Labels"])
+        }
+    except:
+        return {
+            'headers': {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "Content-Type",
+                "Access-Control-Allow-Methods": "POST"
+            },
+            'statusCode': 404,
+            'body': error
+        }
