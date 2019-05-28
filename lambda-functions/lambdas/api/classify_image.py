@@ -70,6 +70,6 @@ def lambda_handler(event, context):
                 "Access-Control-Allow-Headers": "Content-Type",
                 "Access-Control-Allow-Methods": "POST"
             },
-            'statusCode': 404,
+            'statusCode': 400,
             'body': error
         }
