@@ -28,10 +28,8 @@ reko = boto3.client('rekognition')
 
 def lambda_handler(event, context):
     model = json.loads(event["body"])
-    #model = event["body"]
     filename = model["filename"]
     imagedata = model["imagedata"]
-    contenttype = model["contenttype"]
 
     localFile: Path = save_to_local_file(filename, imagedata)
 
@@ -52,7 +50,8 @@ def lambda_handler(event, context):
         MaxLabels=123
     )
     # print(response)
-    dal.add_classified_image(str(bucketFilePath),BUCKET_NAME,response["Labels"])
+    dal.add_classified_image(
+        str(bucketFilePath), BUCKET_NAME, response["Labels"])
 
     return {
         'headers': {

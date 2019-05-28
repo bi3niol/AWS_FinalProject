@@ -1,0 +1,1 @@
+./publish.bat pageDataFunction api/get_page_data.lambda_handler

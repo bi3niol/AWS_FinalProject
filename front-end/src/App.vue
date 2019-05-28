@@ -103,6 +103,20 @@ export default {
         }
       ]
     };
+
+    $.ajax({
+      url: config.GET_PAGE_DATA_URL,
+      type: "GET",
+      data: {
+        topLabelsCount: 20,
+        imageCount: 20
+      }
+    })
+      .done((data, status) => {
+        console.log(data);
+      })
+      .fail(this.onRequestFail)
+      .always(this.always);
   },
   methods: {
     setLoader(isLoading) {
@@ -111,6 +125,13 @@ export default {
       } else {
         $(".loader-container").removeClass("request-inprogress");
       }
+    },
+    onRequestFail(error) {
+      console.error(error);
+      Vue.toasted.error("Error : " + error.message, this.toastedOptions);
+    },
+    always() {
+      this.setLoader(false);
     },
     classifyImage(file) {
       console.log(file);
@@ -144,13 +165,8 @@ export default {
               this.toastedOptions
             );
           })
-          .fail(err => {
-            console.error(err);
-            Vue.toasted.error("Error : " + err.message, this.toastedOptions);
-          })
-          .always(() => {
-            this.setLoader(false);
-          });
+          .fail(this.onRequestFail)
+          .always(this.always);
       };
       reader.onerror = error => {
         console.log("Error: ", error);

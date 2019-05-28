@@ -4,7 +4,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>664ec2e2-e732-4b4e-8c34-022293b6baa2</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>test.py</StartupFile>
+    <StartupFile>
+    </StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,20 +22,18 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="api\" />
-    <Folder Include="workers\" />
+    <Folder Include="lambdas\api\" />
+    <Folder Include="lambdas\" />
+    <Folder Include="lambdas\workers\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="api\classify_image.py">
+    <Compile Include="lambdas\api\classify_image.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="api\get_page_data.py">
+    <Compile Include="lambdas\api\get_page_data.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="data_repository.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="test.py">
+    <Compile Include="lambdas\data_repository.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

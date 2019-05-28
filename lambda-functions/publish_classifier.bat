@@ -1,0 +1,1 @@
+./publish.bat classifyimage api/classify_image.lambda_handler

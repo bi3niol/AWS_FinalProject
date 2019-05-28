@@ -55,7 +55,7 @@ def get_current_labels_state_of_statistics():
 
     labels = count_labels(items)
     sdLabels = {}
-    if(sd != None):
+    if(sd != None and STATISTICS_DATA_LABELS_KEY in sd):
         sdLabels = sd[STATISTICS_DATA_LABELS_KEY]
 
     __merge_statistics(sdLabels, labels)
@@ -96,7 +96,7 @@ def get_top_n_labels(n: int = 10):
 def add_classified_image(s3Location: str, s3Bucket, labels):
     table = dynamodb.Table(CLASSIFIED_IMAGES_TABLE_NAME)
     for label in labels:
-        label["Confidence"] = Decimal(label["Confidence"])
+        label["Confidence"] = str(label["Confidence"])
 
     table.put_item(Item={
         CI_PRIMARY_KEY: s3Location,
