@@ -2,6 +2,7 @@ import boto3
 from datetime import datetime
 from decimal import Decimal
 from boto3.dynamodb.conditions import Key, Attr
+import copy
 
 CLASSIFIED_IMAGES_TABLE_NAME = "ClassifiedImages"
 STATISTICS_DATA_TABLE_NAME = "StatisticsData"
@@ -95,8 +96,12 @@ def get_top_n_labels(n: int = 10):
 
 def add_classified_image(s3Location: str, s3Bucket, labels):
     table = dynamodb.Table(CLASSIFIED_IMAGES_TABLE_NAME)
+    labels = copy.deepcopy(labels)
+
     for label in labels:
-        label["Confidence"] = str(label["Confidence"])
+        label["Confidence"] = Decimal(str(label["Confidence"]))
+        label.pop("Instances", None)
+        label.pop("Parents", None)
 
     table.put_item(Item={
         CI_PRIMARY_KEY: s3Location,
@@ -104,3 +109,5 @@ def add_classified_image(s3Location: str, s3Bucket, labels):
         'createdOn': str(datetime.now()),
         'bucketName': s3Bucket
     })
+
+    return labels

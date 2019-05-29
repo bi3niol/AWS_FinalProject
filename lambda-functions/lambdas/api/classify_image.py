@@ -53,7 +53,8 @@ def lambda_handler(event, context):
         )
         error = 6
         # print(response)
-        dal.add_classified_image(str(bucketFilePath), BUCKET_NAME, response["Labels"])
+        labels = dal.add_classified_image(
+            str(bucketFilePath), BUCKET_NAME, response["Labels"])
         error = 7
         return {
             'headers': {
@@ -61,7 +62,7 @@ def lambda_handler(event, context):
                 "Access-Control-Allow-Headers": "Content-Type",
                 "Access-Control-Allow-Methods": "POST"
             },
-            'body': json.dumps(response["Labels"])
+            'body': json.dumps(labels)
         }
     except:
         return {
@@ -70,6 +71,6 @@ def lambda_handler(event, context):
                 "Access-Control-Allow-Headers": "Content-Type",
                 "Access-Control-Allow-Methods": "POST"
             },
-            'statusCode': 404,
-            'body': error
+            'statusCode': 400,
+            'body': json.dumps({"error": error, "message": "Somethig went wrong! :c"})
         }
