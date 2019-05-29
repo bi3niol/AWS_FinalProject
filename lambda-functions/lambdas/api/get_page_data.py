@@ -4,14 +4,16 @@ import json
 
 def lambda_handler(event, context):
     # TODO implement
-    urlParams = event["queryStringParameters"]
+    urlParams = None
+    if("queryStringParameters" in event):
+        urlParams = event["queryStringParameters"]
     labelCount = 10
     imageCount = 10
     if(urlParams != None):
         if("topLabelsCount" in urlParams):
-            labelCount = urlParams["topLabelsCount"]
+            labelCount = int(urlParams["topLabelsCount"])
         if("imageCount" in urlParams):
-            imageCount = urlParams["imageCount"]
+            imageCount = int(urlParams["imageCount"])
 
     labels = dal.get_top_n_labels(labelCount)
     return {

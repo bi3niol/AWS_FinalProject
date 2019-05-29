@@ -14,6 +14,7 @@
       <bar-chart
         :chart-data="chartData">
       </bar-chart>
+      <!-- <apexchart type=bar :options="chartOptions" :series="chartSeries" /> -->
     </div>
     <div class="last-classified-images">
       <span class="app-title">Last classified images</span>
@@ -31,16 +32,39 @@ import ResultPresenter from "./components/ResultPresenter";
 import $ from "jquery";
 import config from "./config.js";
 import Vue from "vue";
+import apexchart from "vue-apexcharts";
 
 export default {
   name: "app",
-  components: { FilePicker, ImageGallery, BarChart, ResultPresenter },
+  components: {
+    FilePicker,
+    ImageGallery,
+    BarChart,
+    ResultPresenter,
+    apexchart
+  },
   data() {
     return {
       toastedOptions: {
         position: "top-center",
         containerClass: "text-center",
         duration: 3000
+      },
+      chartSeries: [
+        {
+          data: []
+        }
+      ],
+      chartOptions: {
+        plotOptions: {
+          bar: { horizontal: true }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        xaxis: {
+          categories: []
+        }
       },
       resultOfClassification: {
         labels: []
@@ -82,41 +106,51 @@ export default {
         1000
       );
     });
-    console.log(config);
-    this.chartData = {
-      labels: [
-        "test1",
-        "test2",
-        "test3",
-        "test4",
-        "test5",
-        "test6",
-        "test7",
-        "test8",
-        "test9"
-      ],
-      datasets: [
-        {
-          label: "class count",
-          backgroundColor: "rgb(52, 126, 245)",
-          data: [12, 23, 4, 17, 15, 1, 9, 5, 20]
-        }
-      ]
-    };
 
-    // $.ajax({
-    //   url: config.GET_PAGE_DATA_URL,
-    //   type: "GET",
-    //   data: {
-    //     topLabelsCount: 20,
-    //     imageCount: 20
-    //   }
-    // })
-    //   .done((data, status) => {
-    //     console.log(data);
-    //   })
-    //   .fail(this.onRequestFail)
-    //   .always(this.always);
+    $.ajax({
+      url: config.GET_PAGE_DATA_URL,
+      type: "GET",
+      data: {
+        topLabelsCount: 20,
+        imageCount: 20
+      }
+    })
+      .done((data, status) => {
+        console.log(data);
+        var lables = [];
+        var values = [];
+        if (data && data.labels && data.labels.length) {
+          for (let i = 0; i < data.labels.length; i++) {
+            const element = data.labels[i];
+            values.push(element.count);
+            lables.push(element.label);
+          }
+          this.chartOptions = {
+            plotOptions: {
+              bar: { horizontal: true }
+            },
+            dataLabels: {
+              enabled: false
+            },
+            xaxis: {
+              categories: lables
+            }
+          };
+          this.chartSeries = { data: values };
+          this.chartData = {
+            labels: lables,
+            datasets: [
+              {
+                label: "class count",
+                backgroundColor: "rgb(52, 126, 245)",
+                data: values
+              }
+            ]
+          };
+        }
+      })
+      .fail(this.onRequestFail)
+      .always(this.always);
   },
   methods: {
     setLoader(isLoading) {

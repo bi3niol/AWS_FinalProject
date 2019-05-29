@@ -1,5 +1,5 @@
 import boto3
-from datetime import datetime
+import datetime
 from decimal import Decimal
 from boto3.dynamodb.conditions import Key, Attr
 import copy
@@ -20,44 +20,30 @@ dynamodb = boto3.resource('dynamodb')
 def get_statistics_data(projectionExpresion: str = None):
     table = dynamodb.Table(STATISTICS_DATA_TABLE_NAME)
 
-    queryItem = {
-        "Key": {
-            STATISTICS_DATA_PRIMARY_KEY: STATISTICS_DATA_PRIMARY_KEY_VALUE
-        }
+    key = {
+        STATISTICS_DATA_PRIMARY_KEY: STATISTICS_DATA_PRIMARY_KEY_VALUE
     }
+    if projectionExpresion is None:
+        response = table.get_item(Key=key)
+    else:
+        response = table.get_item(
+            Key=key, ProjectionExpression=projectionExpresion)
 
-    if(projectionExpresion != None):
-        queryItem["ProjectionExpression"] = projectionExpresion
-
-    response = table.get_item(queryItem)
-
-    if("Item" in response):
-        return response["Item"]
-
-    return None
+    return response.get("Item", {})
 
 
 def get_current_labels_state_of_statistics():
     sd = get_statistics_data()
     table = dynamodb.Table(CLASSIFIED_IMAGES_TABLE_NAME)
 
-    items = None
-    response = {}
-    if(sd == None):
-        response = table.scan()
-    else:
-        response = table.scan(FilterExpression=Attr(
-            CI_CREATEDON_KEY).gte(sd[STATISTICS_DATA_LAST_SYNC_KEY]))
+    response = table.scan(FilterExpression=Attr(
+        CI_CREATEDON_KEY).gte(sd.get(STATISTICS_DATA_LAST_SYNC_KEY, datetime.date.min)))
 
-    if("Items" in response):
-        items = response["Items"]
-    else:
-        items = []
+    items = response.get("Items", [])
 
     labels = count_labels(items)
-    sdLabels = {}
-    if(sd != None and STATISTICS_DATA_LABELS_KEY in sd):
-        sdLabels = sd[STATISTICS_DATA_LABELS_KEY]
+
+    sdLabels = sd.get(STATISTICS_DATA_LABELS_KEY, {})
 
     __merge_statistics(sdLabels, labels)
 
@@ -65,7 +51,7 @@ def get_current_labels_state_of_statistics():
     for key in sdLabels:
         labelArray.append({"label": key, "count": labels[key]})
 
-    labelArray.sort(key=lambda x: x.count, reverse=True)
+    labelArray.sort(key=lambda x: x['count'], reverse=True)
 
     return labelArray, sdLabels
 
@@ -73,19 +59,16 @@ def get_current_labels_state_of_statistics():
 def count_labels(classifiedImages):
     res = {}
     for ci in classifiedImages:
-        for _class in ci["labels"]:
-            if(not _class.Name in res):
-                res[_class.Name] = 0
-            res[_class.Name] = res[_class.Name] + 1
+        for _class in ci.get("labels", []):
+            if(not "Name" in _class):
+                continue
+            res[_class['Name']] = res.get(_class['Name'], 0) + 1
     return res
 
 
 def __merge_statistics(statObject, labels):
     for key in labels:
-        if(key in statObject):
-            statObject[key] = statObject[key] + labels[key]
-        else:
-            statObject[key] = labels[key]
+        statObject[key] = statObject.get(key, 0) + labels[key]
 
 
 def get_top_n_labels(n: int = 10):
@@ -99,14 +82,14 @@ def add_classified_image(s3Location: str, s3Bucket, labels):
     labels = copy.deepcopy(labels)
 
     for label in labels:
-        label["Confidence"] = Decimal(str(label["Confidence"]))
+        label["Confidence"] = str(label["Confidence"])
         label.pop("Instances", None)
         label.pop("Parents", None)
 
     table.put_item(Item={
         CI_PRIMARY_KEY: s3Location,
         'labels': labels,
-        'createdOn': str(datetime.now()),
+        'createdOn': datetime.datetime.now(),
         'bucketName': s3Bucket
     })
 

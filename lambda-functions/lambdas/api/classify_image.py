@@ -49,7 +49,7 @@ def lambda_handler(event, context):
                     'Name': str(bucketFilePath)
                 }
             },
-            MaxLabels=123
+            MaxLabels=10
         )
         error = 6
         # print(response)
