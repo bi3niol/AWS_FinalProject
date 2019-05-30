@@ -1,6 +1,25 @@
 import data_repository as dal
+import os
+import boto3
+
+TOPIC_ARN = os.environ["TOPIC_ARN"]  # "chmury.website.images"
+
+sns = boto3.client('sns')
 
 
 def lambda_handler(event, context):
     dailyData = dal.update_statistics_and_get_daily_data()
-    # todo prepere daily raport, triger SNS event
+
+    message = ["Daily Raport:"]
+    for elem in dailyData:
+        message.append(f"{elem['label']}: {elem['count']}")
+
+    msg = "\n"
+    msg = msg.join(message)
+
+    response = sns.publish(
+        TopicArn=TOPIC_ARN,
+        Message=msg,
+    )
+
+    print(response)

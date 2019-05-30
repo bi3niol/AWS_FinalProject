@@ -57,20 +57,24 @@ def get_current_labels_state_of_statistics():
 
     labelArray = []
     for key in sd[STATISTICS_DATA_LABELS_KEY]:
-        labelArray.append({"label": key, "count": labels[key]})
+        labelArray.append({"label": key, "count": sd[STATISTICS_DATA_LABELS_KEY][key]})
 
-    return labelArray, sd, labels
+    newLabels = []
+    for key in labels:
+        newLabels.append({"label": key, "count": labels[key]})
+    return labelArray, sd, newLabels
 
 
 def update_statistics_and_get_daily_data():
     _, currentStateOfStatistics, dailyStatistics = get_current_labels_state_of_statistics()
 
-    client = boto3.client('dynamodb')
-    client.put_item(
-        TableName=STATISTICS_DATA_TABLE_NAME,
-        Item=currentStateOfStatistics
-    )
-
+    # client = boto3.client('dynamodb')
+    # client.put_item(
+    #     TableName=STATISTICS_DATA_TABLE_NAME,
+    #     Item=currentStateOfStatistics
+    # )
+    
+    dailyStatistics.sort(key=lambda x: x['count'], reverse=True)
     return dailyStatistics
 
 

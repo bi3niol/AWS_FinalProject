@@ -1,0 +1,1 @@
+./publish.bat makeDailyRaport workers/update_statistics_worker.lambda_handler
