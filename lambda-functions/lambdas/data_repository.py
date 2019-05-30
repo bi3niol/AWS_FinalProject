@@ -16,7 +16,6 @@ STATISTICS_DATA_PRIMARY_KEY = "set_name"
 STATISTICS_DATA_PRIMARY_KEY_VALUE = "aggregated_labels"
 STATISTICS_DATA_LABELS_KEY = "labels"
 STATISTICS_DATA_LAST_SYNC_KEY = "last_sync"
-
 dynamodb = boto3.resource('dynamodb')
 
 
@@ -32,7 +31,10 @@ def get_statistics_data(projectionExpresion: str = None):
         response = table.get_item(
             Key=key, ProjectionExpression=projectionExpresion)
 
-    return response.get("Item", {})
+    return response.get("Item", {
+        STATISTICS_DATA_PRIMARY_KEY: STATISTICS_DATA_PRIMARY_KEY_VALUE,
+        STATISTICS_DATA_LABELS_KEY: {},
+    })
 
 
 def get_current_labels_state_of_statistics():
@@ -40,23 +42,36 @@ def get_current_labels_state_of_statistics():
     table = dynamodb.Table(CLASSIFIED_IMAGES_TABLE_NAME)
 
     response = table.scan(FilterExpression=Attr(
-        CI_CREATEDON_KEY).gte(sd.get(STATISTICS_DATA_LAST_SYNC_KEY, str(datetime.date.min))))
+        CI_CREATEDON_KEY).gt(sd.get(STATISTICS_DATA_LAST_SYNC_KEY, str(datetime.date.min))))
 
-    items = response.get("Items", [])
+    items = response.get("Items", [{
+        CI_CREATEDON_KEY: str(datetime.datetime.now())
+    }])
+
+    lastResult = max(items, key=lambda x: x[CI_CREATEDON_KEY])
+    sd[STATISTICS_DATA_LAST_SYNC_KEY] = lastResult[CI_CREATEDON_KEY]
 
     labels = count_labels(items)
 
-    sdLabels = sd.get(STATISTICS_DATA_LABELS_KEY, {})
-
-    __merge_statistics(sdLabels, labels)
+    __merge_statistics(sd[STATISTICS_DATA_LABELS_KEY], labels)
 
     labelArray = []
-    for key in sdLabels:
+    for key in sd[STATISTICS_DATA_LABELS_KEY]:
         labelArray.append({"label": key, "count": labels[key]})
 
-    labelArray.sort(key=lambda x: x['count'], reverse=True)
+    return labelArray, sd, labels
 
-    return labelArray, sdLabels
+
+def update_statistics_and_get_daily_data():
+    _, currentStateOfStatistics, dailyStatistics = get_current_labels_state_of_statistics()
+
+    client = boto3.client('dynamodb')
+    client.put_item(
+        TableName=STATISTICS_DATA_TABLE_NAME,
+        Item=currentStateOfStatistics
+    )
+
+    return dailyStatistics
 
 
 def count_labels(classifiedImages):
@@ -75,19 +90,16 @@ def __merge_statistics(statObject, labels):
 
 
 def get_top_n_labels(n: int = 10):
-    labels, _ = get_current_labels_state_of_statistics()
+    labels, _, _ = get_current_labels_state_of_statistics()
+    labels.sort(key=lambda x: x['count'], reverse=True)
     nn = min(n, len(labels))
     return labels[0:nn]
 
 
 def get_top_n_images(n: int = 20):
     projectionExpression = f"{CI_PRIMARY_KEY}, {CI_BUCKET_NAME_NAME}, {CI_CREATEDON_KEY}, {CI_LABELS_KEY}"
-    # expressionAttributeNames = {
-    #     "#location": CI_PRIMARY_KEY
-    # }
     table = dynamodb.Table(CLASSIFIED_IMAGES_TABLE_NAME)
     response = table.scan(ProjectionExpression=projectionExpression,
-                          # ExpressionAttributeNames=expressionAttributeNames,
                           Limit=n)
 
     return response.get("Items", [])
