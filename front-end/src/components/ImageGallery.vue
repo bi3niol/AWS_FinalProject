@@ -3,10 +3,12 @@
     <div class="images">
         <div class="image" v-for="(image,id) in images" :key="id" @click="()=>show(id)">
             <div>
-              <div class="image-description">
-                Cat : 80%
-              </div>
-              <img :src="image"/>
+              <!-- <div class="image-description">
+                <div v-for="(label,id2) in image.labels" :key="id2">
+                  {{label.Name}}
+                </div>
+              </div> -->
+              <img :src="image.src"/>
             </div>
         </div>
     </div>
@@ -40,7 +42,7 @@ export default {
   },
   computed: {
     srcs() {
-      return this.images;
+      return this.images.map(val => val.src);
     }
   }
 };
@@ -76,6 +78,6 @@ export default {
 .image-description {
   position: absolute;
   pointer-events: none;
-  bottom: 0;
+  top: 0;
 }
 </style>

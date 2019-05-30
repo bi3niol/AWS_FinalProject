@@ -11,10 +11,7 @@
     <div class="statistics-data">
       <div class="app-title">Most frequently returned results</div>
       <hr/>
-      <bar-chart
-        :chart-data="chartData">
-      </bar-chart>
-      <!-- <apexchart type=bar :options="chartOptions" :series="chartSeries" /> -->
+      <apexchart type=bar :options="chartOptions" :series="chartSeries" />
     </div>
     <div class="last-classified-images">
       <span class="app-title">Last classified images</span>
@@ -27,7 +24,6 @@
 <script>
 import FilePicker from "./components/FilePicker";
 import ImageGallery from "./components/ImageGallery";
-import BarChart from "./components/BarChart";
 import ResultPresenter from "./components/ResultPresenter";
 import $ from "jquery";
 import config from "./config.js";
@@ -39,7 +35,6 @@ export default {
   components: {
     FilePicker,
     ImageGallery,
-    BarChart,
     ResultPresenter,
     apexchart
   },
@@ -69,32 +64,7 @@ export default {
       resultOfClassification: {
         labels: []
       },
-      chartData: {
-        labels: [],
-        datasets: []
-      },
-      images: [
-        "https://via.placeholder.com/450.png/",
-        "https://via.placeholder.com/250x400.png/",
-        "https://via.placeholder.com/300.png/",
-        "https://via.placeholder.com/150.png/",
-        "https://via.placeholder.com/250x400.png/",
-        "https://via.placeholder.com/450.png/",
-        "https://via.placeholder.com/150.png/",
-        "https://via.placeholder.com/150.png/",
-        "https://via.placeholder.com/150.png/",
-        "https://via.placeholder.com/150.png/",
-        "https://via.placeholder.com/450.png/",
-        "https://via.placeholder.com/300.png/",
-        "https://via.placeholder.com/300.png/",
-        "https://via.placeholder.com/150.png/",
-        "https://via.placeholder.com/450.png/",
-        "https://via.placeholder.com/150.png/",
-        "https://via.placeholder.com/300.png/",
-        "https://via.placeholder.com/250x400.png/",
-        "https://via.placeholder.com/250x400.png/",
-        "https://via.placeholder.com/150.png/"
-      ]
+      images: []
     };
   },
   mounted() {
@@ -111,12 +81,11 @@ export default {
       url: config.GET_PAGE_DATA_URL,
       type: "GET",
       data: {
-        topLabelsCount: 20,
+        topLabelsCount: 10,
         imageCount: 20
       }
     })
       .done((data, status) => {
-        console.log(data);
         var lables = [];
         var values = [];
         if (data && data.labels && data.labels.length) {
@@ -136,18 +105,20 @@ export default {
               categories: lables
             }
           };
-          this.chartSeries = { data: values };
-          this.chartData = {
-            labels: lables,
-            datasets: [
-              {
-                label: "class count",
-                backgroundColor: "rgb(52, 126, 245)",
-                data: values
-              }
-            ]
-          };
+          this.chartSeries = [{ data: values }];
         }
+        var images = [];
+        if (data && data.images && data.images.length) {
+          for (let index = 0; index < data.images.length; index++) {
+            const element = data.images[index];
+            images.push({
+              src:
+                config.S3_URL + element.bucketName + "/" + element.primarykey,
+              labels: element.labels
+            });
+          }
+        }
+        this.images = images;
       })
       .fail(this.onRequestFail)
       .always(this.always);
@@ -190,7 +161,6 @@ export default {
           })
         })
           .done((data, status) => {
-            console.log(data);
             this.resultOfClassification.labels = data;
             Vue.toasted.success(
               "Success : found " +

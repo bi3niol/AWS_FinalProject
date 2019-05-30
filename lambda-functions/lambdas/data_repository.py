@@ -6,8 +6,11 @@ import copy
 
 CLASSIFIED_IMAGES_TABLE_NAME = "ClassifiedImages"
 STATISTICS_DATA_TABLE_NAME = "StatisticsData"
+
 CI_PRIMARY_KEY = "primarykey"
 CI_CREATEDON_KEY = "createdOn"
+CI_BUCKET_NAME_NAME = "bucketName"
+CI_LABELS_KEY = "labels"
 
 STATISTICS_DATA_PRIMARY_KEY = "set_name"
 STATISTICS_DATA_PRIMARY_KEY_VALUE = "aggregated_labels"
@@ -37,7 +40,7 @@ def get_current_labels_state_of_statistics():
     table = dynamodb.Table(CLASSIFIED_IMAGES_TABLE_NAME)
 
     response = table.scan(FilterExpression=Attr(
-        CI_CREATEDON_KEY).gte(sd.get(STATISTICS_DATA_LAST_SYNC_KEY, datetime.date.min)))
+        CI_CREATEDON_KEY).gte(sd.get(STATISTICS_DATA_LAST_SYNC_KEY, str(datetime.date.min))))
 
     items = response.get("Items", [])
 
@@ -77,6 +80,19 @@ def get_top_n_labels(n: int = 10):
     return labels[0:nn]
 
 
+def get_top_n_images(n: int = 20):
+    projectionExpression = f"{CI_PRIMARY_KEY}, {CI_BUCKET_NAME_NAME}, {CI_CREATEDON_KEY}, {CI_LABELS_KEY}"
+    # expressionAttributeNames = {
+    #     "#location": CI_PRIMARY_KEY
+    # }
+    table = dynamodb.Table(CLASSIFIED_IMAGES_TABLE_NAME)
+    response = table.scan(ProjectionExpression=projectionExpression,
+                          # ExpressionAttributeNames=expressionAttributeNames,
+                          Limit=n)
+
+    return response.get("Items", [])
+
+
 def add_classified_image(s3Location: str, s3Bucket, labels):
     table = dynamodb.Table(CLASSIFIED_IMAGES_TABLE_NAME)
     labels = copy.deepcopy(labels)
@@ -88,9 +104,9 @@ def add_classified_image(s3Location: str, s3Bucket, labels):
 
     table.put_item(Item={
         CI_PRIMARY_KEY: s3Location,
-        'labels': labels,
-        'createdOn': datetime.datetime.now(),
-        'bucketName': s3Bucket
+        CI_LABELS_KEY: labels,
+        CI_CREATEDON_KEY: str(datetime.datetime.now()),
+        CI_BUCKET_NAME_NAME: s3Bucket
     })
 
     return labels

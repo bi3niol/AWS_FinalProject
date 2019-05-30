@@ -3,19 +3,13 @@ import json
 
 
 def lambda_handler(event, context):
-    # TODO implement
-    urlParams = None
-    if("queryStringParameters" in event):
-        urlParams = event["queryStringParameters"]
-    labelCount = 10
-    imageCount = 10
-    if(urlParams != None):
-        if("topLabelsCount" in urlParams):
-            labelCount = int(urlParams["topLabelsCount"])
-        if("imageCount" in urlParams):
-            imageCount = int(urlParams["imageCount"])
+    urlParams = event.get("queryStringParameters", {})
+
+    labelCount = int(urlParams.get("topLabelsCount", 10))
+    imageCount = int(urlParams.get("imageCount", 20))
 
     labels = dal.get_top_n_labels(labelCount)
+    images = dal.get_top_n_images(imageCount)
     return {
         'headers': {
             "Access-Control-Allow-Origin": "*",
@@ -23,6 +17,7 @@ def lambda_handler(event, context):
             "Access-Control-Allow-Methods": "POST"
         },
         'body': json.dumps({
-            "labels": labels
+            "labels": labels,
+            "images": images
         })
     }
