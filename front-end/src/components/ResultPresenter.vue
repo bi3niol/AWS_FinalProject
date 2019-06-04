@@ -1,8 +1,8 @@
 <template>
     <div class="presenter">
-        <div class="item" v-for="label in result.labels" :key="label.Name">
+        <div class="item" :class="indx%2==0?'blue-bc-theme-inverse':'blue-bc-theme'" v-for="(label, indx) in result.labels" :key="label.Name">
             <span>{{label.Name}}</span>
-            <span>{{label.Confidence}}</span>
+            <span>{{Number(label.Confidence).toFixed(2)}}</span>
         </div>
     </div>
 </template>
@@ -21,9 +21,9 @@ export default { name: "result-presenter", props: ["result"] };
   margin: 10px 0;
   padding: 15px;
 }
-.item span {
+/* .item span {
   display: block;
-}
+} */
 </style>
 
  

@@ -47,6 +47,7 @@ export default {
       },
       chartSeries: [
         {
+          name: "Number of classifications",
           data: []
         }
       ],
