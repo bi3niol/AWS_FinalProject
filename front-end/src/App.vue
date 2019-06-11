@@ -114,7 +114,7 @@ export default {
             const element = data.images[index];
             images.push({
               src:
-                config.S3_URL + element.bucketName + "/" + element.primarykey,
+                config.S3_URL + element.bucketName + "/" + element.imgLocation,
               labels: element.labels
             });
           }

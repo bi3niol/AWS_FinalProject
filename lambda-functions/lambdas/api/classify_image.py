@@ -64,7 +64,8 @@ def lambda_handler(event, context):
             },
             'body': json.dumps(labels)
         }
-    except:
+    except Exception as e:
+        print(e)
         return {
             'headers': {
                 "Access-Control-Allow-Origin": "*",

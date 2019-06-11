@@ -7,7 +7,10 @@ import copy
 CLASSIFIED_IMAGES_TABLE_NAME = "ClassifiedImages"
 STATISTICS_DATA_TABLE_NAME = "StatisticsData"
 
-CI_PRIMARY_KEY = "primarykey"
+CI_DATE_KEY = "date"
+CI_DATE_VALUE = "2019-06-11"
+CI_TIME_KEY = "time"
+CI_IMAGE_LOCATION_KEY = "imgLocation"
 CI_CREATEDON_KEY = "createdOn"
 CI_BUCKET_NAME_NAME = "bucketName"
 CI_LABELS_KEY = "labels"
@@ -48,8 +51,9 @@ def get_current_labels_state_of_statistics():
         CI_CREATEDON_KEY: str(datetime.datetime.now())
     }])
 
-    lastResult = max(items, key=lambda x: x[CI_CREATEDON_KEY])
-    sd[STATISTICS_DATA_LAST_SYNC_KEY] = lastResult[CI_CREATEDON_KEY]
+    if len(items) > 0:
+        lastResult = max(items, key=lambda x: x[CI_CREATEDON_KEY])
+        sd[STATISTICS_DATA_LAST_SYNC_KEY] = lastResult[CI_CREATEDON_KEY]
 
     labels = count_labels(items)
 
@@ -57,7 +61,8 @@ def get_current_labels_state_of_statistics():
 
     labelArray = []
     for key in sd[STATISTICS_DATA_LABELS_KEY]:
-        labelArray.append({"label": key, "count": sd[STATISTICS_DATA_LABELS_KEY][key]})
+        labelArray.append(
+            {"label": key, "count": sd[STATISTICS_DATA_LABELS_KEY][key]})
 
     newLabels = []
     for key in labels:
@@ -73,7 +78,7 @@ def update_statistics_and_get_daily_data():
     #     TableName=STATISTICS_DATA_TABLE_NAME,
     #     Item=currentStateOfStatistics
     # )
-    
+
     dailyStatistics.sort(key=lambda x: x['count'], reverse=True)
     return dailyStatistics
 
@@ -101,10 +106,13 @@ def get_top_n_labels(n: int = 10):
 
 
 def get_top_n_images(n: int = 20):
-    projectionExpression = f"{CI_PRIMARY_KEY}, {CI_BUCKET_NAME_NAME}, {CI_CREATEDON_KEY}, {CI_LABELS_KEY}"
+    projectionExpression = f"{CI_IMAGE_LOCATION_KEY}, {CI_BUCKET_NAME_NAME}, {CI_CREATEDON_KEY}, {CI_LABELS_KEY}"
     table = dynamodb.Table(CLASSIFIED_IMAGES_TABLE_NAME)
-    response = table.scan(ProjectionExpression=projectionExpression,
-                          Limit=n)
+    response = table.query(ProjectionExpression=projectionExpression,
+                           KeyConditionExpression=Key(
+                               CI_DATE_KEY).eq(CI_DATE_VALUE),
+                           ScanIndexForward=False,
+                           Limit=n)
 
     return response.get("Items", [])
 
@@ -117,11 +125,13 @@ def add_classified_image(s3Location: str, s3Bucket, labels):
         label["Confidence"] = str(label["Confidence"])
         label.pop("Instances", None)
         label.pop("Parents", None)
-
+    _datetime = datetime.datetime.now()
     table.put_item(Item={
-        CI_PRIMARY_KEY: s3Location,
+        CI_DATE_KEY: CI_DATE_VALUE,
+        CI_TIME_KEY: str(_datetime),
+        CI_IMAGE_LOCATION_KEY: s3Location,
         CI_LABELS_KEY: labels,
-        CI_CREATEDON_KEY: str(datetime.datetime.now()),
+        CI_CREATEDON_KEY: str(_datetime),
         CI_BUCKET_NAME_NAME: s3Bucket
     })
 
