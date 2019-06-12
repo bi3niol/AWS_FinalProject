@@ -10,12 +10,9 @@ sns = boto3.client('sns')
 def lambda_handler(event, context):
     dailyData = dal.update_statistics_and_get_daily_data()
 
-    message = ["Daily Raport:"]
-    for elem in dailyData:
-        message.append(f"{elem['label']}: {elem['count']}")
-
-    msg = "\n"
-    msg = msg.join(message)
+    message = ["Daily Raport:"] + [f"{elem['label']}: {elem['count']}" for elem in dailyData]
+    
+    msg = "\n".join(message)
 
     response = sns.publish(
         TopicArn=TOPIC_ARN,
