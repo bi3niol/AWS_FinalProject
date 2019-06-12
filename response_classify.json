@@ -1,0 +1,26 @@
+[
+  {
+    "Name": "Person",
+    "Confidence": "99.85134887695312"
+  },
+  {
+    "Name": "Human",
+    "Confidence": "99.85134887695312"
+  },
+  {
+    "Name": "School",
+    "Confidence": "99.83865356445312"
+  },
+  {
+    "Name": "Indoors",
+    "Confidence": "98.81564331054688"
+  },
+  {
+    "Name": "Classroom",
+    "Confidence": "98.81564331054688"
+  },
+  {
+    "Name": "Room",
+    "Confidence": "98.81564331054688"
+  }
+]

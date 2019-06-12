@@ -1,0 +1,786 @@
+{
+  "labels": [
+    {
+      "label": "Person",
+      "count": "8"
+    },
+    {
+      "label": "Mammal",
+      "count": "4"
+    },
+    {
+      "label": "Sport",
+      "count": "4"
+    },
+    {
+      "label": "Human",
+      "count": "4"
+    },
+    {
+      "label": "Team Sport",
+      "count": "4"
+    },
+    {
+      "label": "Clothing",
+      "count": "4"
+    },
+    {
+      "label": "Animal",
+      "count": "4"
+    },
+    {
+      "label": "Cat",
+      "count": "4"
+    },
+    {
+      "label": "Art",
+      "count": "4"
+    },
+    {
+      "label": "Symbol",
+      "count": "4"
+    }
+  ],
+  "images": [
+    {
+      "imgLocation": "images/0f107822-67d3-4fea-a930-c320e59201e2_Bi3NioL (22).png",
+      "createdOn": "2019-06-12 14:02:47.278212",
+      "bucketName": "chmury.website.images",
+      "labels": [
+        {
+          "Confidence": "99.85134887695312",
+          "Name": "Person"
+        },
+        {
+          "Confidence": "99.85134887695312",
+          "Name": "Human"
+        },
+        {
+          "Confidence": "99.83865356445312",
+          "Name": "School"
+        },
+        {
+          "Confidence": "98.81564331054688",
+          "Name": "Classroom"
+        },
+        {
+          "Confidence": "98.81564331054688",
+          "Name": "Room"
+        },
+        {
+          "Confidence": "98.81564331054688",
+          "Name": "Indoors"
+        }
+      ]
+    },
+    {
+      "imgLocation": "images/b23afc9a-ea85-4695-b1f5-f0aec2357b05_18203-80x120.jpg",
+      "createdOn": "2019-06-12 13:35:10.034156",
+      "bucketName": "chmury.website.images",
+      "labels": [
+        {
+          "Confidence": "86.82147216796875",
+          "Name": "Symbol"
+        },
+        {
+          "Confidence": "86.82147216796875",
+          "Name": "Emblem"
+        },
+        {
+          "Confidence": "71.93116760253906",
+          "Name": "Stencil"
+        },
+        {
+          "Confidence": "59.74183654785156",
+          "Name": "Hand"
+        },
+        {
+          "Confidence": "59.28047180175781",
+          "Name": "Art"
+        }
+      ]
+    },
+    {
+      "imgLocation": "images/ca5a7547-0d68-4028-9c17-76d6eb43172d_cloud_architecture_project2019.png",
+      "createdOn": "2019-06-12 11:33:32.316012",
+      "bucketName": "chmury.website.images",
+      "labels": [
+        {
+          "Confidence": "78.11309051513672",
+          "Name": "Electronics"
+        },
+        {
+          "Confidence": "67.05693817138672",
+          "Name": "Diagram"
+        },
+        {
+          "Confidence": "59.35546112060547",
+          "Name": "Computer"
+        },
+        {
+          "Confidence": "58.72432327270508",
+          "Name": "Hardware"
+        },
+        {
+          "Confidence": "57.85268020629883",
+          "Name": "Plot"
+        },
+        {
+          "Confidence": "56.0120735168457",
+          "Name": "Screen"
+        }
+      ]
+    },
+    {
+      "imgLocation": "images/28e26465-ff0f-4db3-b702-1d130e120a53_cloud_architecture_project2019.png",
+      "createdOn": "2019-06-12 11:33:27.378736",
+      "bucketName": "chmury.website.images",
+      "labels": [
+        {
+          "Confidence": "78.11311340332031",
+          "Name": "Electronics"
+        },
+        {
+          "Confidence": "67.05721282958984",
+          "Name": "Diagram"
+        },
+        {
+          "Confidence": "59.35531997680664",
+          "Name": "Computer"
+        },
+        {
+          "Confidence": "58.72433090209961",
+          "Name": "Hardware"
+        },
+        {
+          "Confidence": "57.85295104980469",
+          "Name": "Plot"
+        },
+        {
+          "Confidence": "56.01225662231445",
+          "Name": "Screen"
+        }
+      ]
+    },
+    {
+      "imgLocation": "images/52a0f340-8462-4fe4-b1eb-38de3541d5d8_58549491_2351378985075500_8255650728937259008_n.jpg",
+      "createdOn": "2019-06-12 11:08:13.343166",
+      "bucketName": "chmury.website.images",
+      "labels": [
+        {
+          "Confidence": "83.90361785888672",
+          "Name": "Book"
+        },
+        {
+          "Confidence": "77.0557861328125",
+          "Name": "Text"
+        },
+        {
+          "Confidence": "70.25553894042969",
+          "Name": "Accessories"
+        },
+        {
+          "Confidence": "70.25553894042969",
+          "Name": "Glasses"
+        },
+        {
+          "Confidence": "70.25553894042969",
+          "Name": "Accessory"
+        },
+        {
+          "Confidence": "62.36176681518555",
+          "Name": "Cushion"
+        },
+        {
+          "Confidence": "58.233802795410156",
+          "Name": "Advertisement"
+        },
+        {
+          "Confidence": "58.233802795410156",
+          "Name": "Poster"
+        },
+        {
+          "Confidence": "55.6455192565918",
+          "Name": "Page"
+        }
+      ]
+    },
+    {
+      "imgLocation": "images/ee1d291d-931d-49fa-aed7-a1653731ec8f_60342750_2346896345595219_3110187716856250368_o.jpg",
+      "createdOn": "2019-06-12 11:07:49.050355",
+      "bucketName": "chmury.website.images",
+      "labels": [
+        {
+          "Confidence": "99.3155746459961",
+          "Name": "Person"
+        },
+        {
+          "Confidence": "98.77891540527344",
+          "Name": "People"
+        },
+        {
+          "Confidence": "95.65106201171875",
+          "Name": "Sport"
+        },
+        {
+          "Confidence": "95.15153503417969",
+          "Name": "Team Sport"
+        },
+        {
+          "Confidence": "95.15153503417969",
+          "Name": "Team"
+        },
+        {
+          "Confidence": "85.15506744384766",
+          "Name": "Shoe"
+        },
+        {
+          "Confidence": "85.15506744384766",
+          "Name": "Clothing"
+        },
+        {
+          "Confidence": "83.34214782714844",
+          "Name": "Crowd"
+        },
+        {
+          "Confidence": "81.59552001953125",
+          "Name": "Basketball"
+        },
+        {
+          "Confidence": "68.60610961914062",
+          "Name": "Field"
+        }
+      ]
+    },
+    {
+      "imgLocation": "images/0a9bc578-b875-49dd-b96c-1dd7855648ac_Zasób 2.png",
+      "createdOn": "2019-06-12 11:07:05.029093",
+      "bucketName": "chmury.website.images",
+      "labels": [
+        {
+          "Confidence": "97.05049133300781",
+          "Name": "Logo"
+        },
+        {
+          "Confidence": "97.05049133300781",
+          "Name": "Symbol"
+        },
+        {
+          "Confidence": "97.05049133300781",
+          "Name": "Trademark"
+        },
+        {
+          "Confidence": "86.17314910888672",
+          "Name": "Text"
+        },
+        {
+          "Confidence": "71.80005645751953",
+          "Name": "Word"
+        }
+      ]
+    },
+    {
+      "imgLocation": "images/b222f061-f130-4f6a-ad50-193212b39a26_cloud_architecture_project2019.png",
+      "createdOn": "2019-06-12 11:06:21.307665",
+      "bucketName": "chmury.website.images",
+      "labels": [
+        {
+          "Confidence": "85.66061401367188",
+          "Name": "Text"
+        },
+        {
+          "Confidence": "85.66061401367188",
+          "Name": "Label"
+        },
+        {
+          "Confidence": "68.29261016845703",
+          "Name": "Symbol"
+        },
+        {
+          "Confidence": "67.76594543457031",
+          "Name": "Scoreboard"
+        },
+        {
+          "Confidence": "55.543094635009766",
+          "Name": "Electronics"
+        }
+      ]
+    },
+    {
+      "imgLocation": "images/bafb53e2-02e9-4a79-bbdd-35b614e9cb41_pobrane (1).jpeg",
+      "createdOn": "2019-06-12 11:05:30.641543",
+      "bucketName": "chmury.website.images",
+      "labels": [
+        {
+          "Confidence": "97.41657257080078",
+          "Name": "Mammal"
+        },
+        {
+          "Confidence": "97.41657257080078",
+          "Name": "Pet"
+        },
+        {
+          "Confidence": "97.41657257080078",
+          "Name": "Cat"
+        },
+        {
+          "Confidence": "97.41657257080078",
+          "Name": "Animal"
+        },
+        {
+          "Confidence": "97.41657257080078",
+          "Name": "Angora"
+        },
+        {
+          "Confidence": "81.4042739868164",
+          "Name": "Egyptian Cat"
+        },
+        {
+          "Confidence": "72.80772399902344",
+          "Name": "Toy"
+        }
+      ]
+    },
+    {
+      "imgLocation": "images/78d75926-6f39-491e-a225-d0164c298eb2_Toronto-Raptors-Kawhi-Leonard-scores-36-despite-apparent-leg-injury.jpg",
+      "createdOn": "2019-06-12 11:05:05.006937",
+      "bucketName": "chmury.website.images",
+      "labels": [
+        {
+          "Confidence": "99.5724868774414",
+          "Name": "Person"
+        },
+        {
+          "Confidence": "98.14051818847656",
+          "Name": "People"
+        },
+        {
+          "Confidence": "94.95274353027344",
+          "Name": "Sport"
+        },
+        {
+          "Confidence": "93.59193420410156",
+          "Name": "Team Sport"
+        },
+        {
+          "Confidence": "93.59193420410156",
+          "Name": "Team"
+        },
+        {
+          "Confidence": "91.01012420654297",
+          "Name": "Basketball"
+        },
+        {
+          "Confidence": "78.64116668701172",
+          "Name": "Crowd"
+        },
+        {
+          "Confidence": "78.64116668701172",
+          "Name": "Audience"
+        },
+        {
+          "Confidence": "61.734066009521484",
+          "Name": "Sphere"
+        },
+        {
+          "Confidence": "56.125762939453125",
+          "Name": "Clothing"
+        }
+      ]
+    },
+    {
+      "imgLocation": "images/a002d979-223b-49b2-99b1-acdfcef5b2d8_kot-696x464.jpg",
+      "createdOn": "2019-06-12 11:04:16.389963",
+      "bucketName": "chmury.website.images",
+      "labels": [
+        {
+          "Confidence": "97.78441619873047",
+          "Name": "Mammal"
+        },
+        {
+          "Confidence": "97.78441619873047",
+          "Name": "Animal"
+        },
+        {
+          "Confidence": "97.78441619873047",
+          "Name": "Cat"
+        },
+        {
+          "Confidence": "97.78441619873047",
+          "Name": "Pet"
+        },
+        {
+          "Confidence": "83.49811553955078",
+          "Name": "Flower"
+        },
+        {
+          "Confidence": "83.49811553955078",
+          "Name": "Petal"
+        },
+        {
+          "Confidence": "71.45977020263672",
+          "Name": "Smelling"
+        },
+        {
+          "Confidence": "69.56964111328125",
+          "Name": "Manx"
+        },
+        {
+          "Confidence": "62.66500473022461",
+          "Name": "Mouth"
+        },
+        {
+          "Confidence": "61.973480224609375",
+          "Name": "Outdoors"
+        }
+      ]
+    },
+    {
+      "imgLocation": "images/094fc523-6cb0-4e22-9519-8fb7f0288d4e_d6af86a7-e620-4666-a4bc-ddeb7e3672e3.jpeg",
+      "createdOn": "2019-06-12 11:03:53.507044",
+      "bucketName": "chmury.website.images",
+      "labels": [
+        {
+          "Confidence": "99.1209487915039",
+          "Name": "Person"
+        },
+        {
+          "Confidence": "99.1209487915039",
+          "Name": "Human"
+        },
+        {
+          "Confidence": "98.23760986328125",
+          "Name": "People"
+        },
+        {
+          "Confidence": "94.93286895751953",
+          "Name": "Sport"
+        },
+        {
+          "Confidence": "94.81575012207031",
+          "Name": "Team Sport"
+        },
+        {
+          "Confidence": "94.81575012207031",
+          "Name": "Team"
+        },
+        {
+          "Confidence": "87.11444854736328",
+          "Name": "Clothing"
+        },
+        {
+          "Confidence": "84.4683609008789",
+          "Name": "Basketball"
+        },
+        {
+          "Confidence": "68.22774505615234",
+          "Name": "Footwear"
+        },
+        {
+          "Confidence": "68.22774505615234",
+          "Name": "Shoe"
+        }
+      ]
+    },
+    {
+      "imgLocation": "images/24cf967a-15b0-4fe0-a84a-3d516bd8cbaa_dedeco_mini_pw_warszawa_21.jpg",
+      "createdOn": "2019-06-12 11:03:23.567995",
+      "bucketName": "chmury.website.images",
+      "labels": [
+        {
+          "Confidence": "99.98126983642578",
+          "Name": "Building"
+        },
+        {
+          "Confidence": "99.98126983642578",
+          "Name": "Office Building"
+        },
+        {
+          "Confidence": "97.28108215332031",
+          "Name": "Housing"
+        },
+        {
+          "Confidence": "97.28108215332031",
+          "Name": "Condo"
+        },
+        {
+          "Confidence": "94.4078369140625",
+          "Name": "Convention Center"
+        },
+        {
+          "Confidence": "94.4078369140625",
+          "Name": "Architecture"
+        },
+        {
+          "Confidence": "87.47929382324219",
+          "Name": "Urban"
+        },
+        {
+          "Confidence": "87.47929382324219",
+          "Name": "High Rise"
+        },
+        {
+          "Confidence": "87.47929382324219",
+          "Name": "City"
+        },
+        {
+          "Confidence": "58.21559524536133",
+          "Name": "Shelter"
+        }
+      ]
+    },
+    {
+      "imgLocation": "images/fea3a42c-5946-44e3-af23-ff4a845e8de3_pobrane.jpeg",
+      "createdOn": "2019-06-12 11:03:11.337685",
+      "bucketName": "chmury.website.images",
+      "labels": [
+        {
+          "Confidence": "97.23822021484375",
+          "Name": "Cat"
+        },
+        {
+          "Confidence": "97.23822021484375",
+          "Name": "Animal"
+        },
+        {
+          "Confidence": "97.23822021484375",
+          "Name": "Pet"
+        },
+        {
+          "Confidence": "97.23822021484375",
+          "Name": "Abyssinian"
+        },
+        {
+          "Confidence": "97.23822021484375",
+          "Name": "Mammal"
+        }
+      ]
+    },
+    {
+      "imgLocation": "images/fe6929f6-fdb9-4781-bd0b-d53e8a1d2fd1_koty-sa-niesamowite-maja-tzw-trzecia-powieke-poznaj-32-ciekawostki-na-ich-temat_1.jpeg",
+      "createdOn": "2019-06-12 11:02:59.168639",
+      "bucketName": "chmury.website.images",
+      "labels": [
+        {
+          "Confidence": "95.92916870117188",
+          "Name": "Pet"
+        },
+        {
+          "Confidence": "95.92916870117188",
+          "Name": "Animal"
+        },
+        {
+          "Confidence": "95.92916870117188",
+          "Name": "Mammal"
+        },
+        {
+          "Confidence": "95.92916870117188",
+          "Name": "Kitten"
+        },
+        {
+          "Confidence": "95.92916870117188",
+          "Name": "Cat"
+        },
+        {
+          "Confidence": "85.55451965332031",
+          "Name": "Person"
+        },
+        {
+          "Confidence": "84.88357543945312",
+          "Name": "Manx"
+        },
+        {
+          "Confidence": "82.70439147949219",
+          "Name": "Abyssinian"
+        },
+        {
+          "Confidence": "56.26434326171875",
+          "Name": "Couch"
+        },
+        {
+          "Confidence": "56.26434326171875",
+          "Name": "Furniture"
+        }
+      ]
+    },
+    {
+      "imgLocation": "images/f326ae7a-c52e-4a88-8d99-ce15d982b691_Toronto-Raptors-Kawhi-Leonard-scores-36-despite-apparent-leg-injury.jpg",
+      "createdOn": "2019-06-12 11:02:43.809288",
+      "bucketName": "chmury.website.images",
+      "labels": [
+        {
+          "Confidence": "99.5724868774414",
+          "Name": "Person"
+        },
+        {
+          "Confidence": "98.14051818847656",
+          "Name": "People"
+        },
+        {
+          "Confidence": "94.95274353027344",
+          "Name": "Sport"
+        },
+        {
+          "Confidence": "93.59193420410156",
+          "Name": "Team"
+        },
+        {
+          "Confidence": "93.59193420410156",
+          "Name": "Team Sport"
+        },
+        {
+          "Confidence": "91.01012420654297",
+          "Name": "Basketball"
+        },
+        {
+          "Confidence": "78.64116668701172",
+          "Name": "Audience"
+        },
+        {
+          "Confidence": "78.64116668701172",
+          "Name": "Crowd"
+        },
+        {
+          "Confidence": "61.734066009521484",
+          "Name": "Sphere"
+        },
+        {
+          "Confidence": "56.125762939453125",
+          "Name": "Clothing"
+        }
+      ]
+    },
+    {
+      "imgLocation": "images/7f144c2e-b592-48d9-810a-976492190f2c_18222647_1504910529539722_4210760472173786198_n.jpg",
+      "createdOn": "2019-06-12 10:52:24.808027",
+      "bucketName": "chmury.website.images",
+      "labels": [
+        {
+          "Confidence": "99.8149642944336",
+          "Name": "Club"
+        },
+        {
+          "Confidence": "99.71773529052734",
+          "Name": "Night Club"
+        },
+        {
+          "Confidence": "97.9976577758789",
+          "Name": "Person"
+        },
+        {
+          "Confidence": "97.9976577758789",
+          "Name": "Human"
+        },
+        {
+          "Confidence": "91.87930297851562",
+          "Name": "Disco"
+        },
+        {
+          "Confidence": "88.75721740722656",
+          "Name": "Party"
+        },
+        {
+          "Confidence": "77.1385726928711",
+          "Name": "Night Life"
+        },
+        {
+          "Confidence": "66.19087219238281",
+          "Name": "Bar Counter"
+        },
+        {
+          "Confidence": "66.19087219238281",
+          "Name": "Pub"
+        }
+      ]
+    },
+    {
+      "imgLocation": "images/d5ec1f2a-9c81-4583-b182-705cc11e6d6d_pobrane.jpeg",
+      "createdOn": "2019-06-12 10:51:44.925538",
+      "bucketName": "chmury.website.images",
+      "labels": [
+        {
+          "Confidence": "83.8907241821289",
+          "Name": "Art"
+        },
+        {
+          "Confidence": "72.54971313476562",
+          "Name": "Paper"
+        },
+        {
+          "Confidence": "58.02431869506836",
+          "Name": "Star Symbol"
+        },
+        {
+          "Confidence": "58.02431869506836",
+          "Name": "Symbol"
+        },
+        {
+          "Confidence": "57.94328308105469",
+          "Name": "Origami"
+        }
+      ]
+    },
+    {
+      "imgLocation": "images/3e1c02ed-a7f9-49ca-9221-57e3f110bace_pobrane (1).jpeg",
+      "createdOn": "2019-06-12 10:51:40.050597",
+      "bucketName": "chmury.website.images",
+      "labels": [
+        {
+          "Confidence": "97.91265106201172",
+          "Name": "Drawing"
+        },
+        {
+          "Confidence": "97.91265106201172",
+          "Name": "Art"
+        },
+        {
+          "Confidence": "97.088134765625",
+          "Name": "Hand"
+        },
+        {
+          "Confidence": "82.02006530761719",
+          "Name": "Sunglasses"
+        },
+        {
+          "Confidence": "82.02006530761719",
+          "Name": "Accessories"
+        },
+        {
+          "Confidence": "82.02006530761719",
+          "Name": "Accessory"
+        },
+        {
+          "Confidence": "80.65911102294922",
+          "Name": "Sketch"
+        },
+        {
+          "Confidence": "74.21076965332031",
+          "Name": "Doodle"
+        },
+        {
+          "Confidence": "73.86821746826172",
+          "Name": "Ball"
+        },
+        {
+          "Confidence": "73.86821746826172",
+          "Name": "Soccer Ball"
+        }
+      ]
+    },
+    {
+      "imgLocation": "images/7ec25ce0-b3d3-4e55-8145-33506d8fe92c_kolory.jpg",
+      "createdOn": "2019-06-12 10:51:34.841103",
+      "bucketName": "chmury.website.images",
+      "labels": [
+        {
+          "Confidence": "99.82222747802734",
+          "Name": "Art"
+        },
+        {
+          "Confidence": "99.82222747802734",
+          "Name": "Graphics"
+        }
+      ]
+    }
+  ]
+}

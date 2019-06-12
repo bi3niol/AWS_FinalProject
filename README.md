@@ -122,6 +122,19 @@ Przechowuje:
 
 -   last\_sync (String).
 
+
+API Gateway
+---------------------
+
+-   Przykładowe zapytanie GET `pageData` https://pdam8y7o31.execute-api.us-east-1.amazonaws.com/chmury/pageDataFunction?topLabelsCount=10&imageCount=20
+    *   `topLabelsCount` - liczba najczęściej występujących etykiet
+    *   `imageCount` - liczba ostatnich obrazków
+    *   Przykładowa odpowiedź umieszczona w pliku [response_pagedata](response_pagedata.json)
+-   Przykładowe zapytanie POST `classifyImage` https://0oanfqjnbg.execute-api.us-east-1.amazonaws.com/chmury/classifyimage
+    * Treść zapytania `{"filename":" image.png","contenttype":"image/png","imagedata":"iVBORw0..."}`
+    * `imagedata` - obrazek w formacie base64
+    *   Przykładowa odpowiedź umieszczona w pliku [response_classify](response_classify.json)
+
 Usprawnienia
 ============
 
@@ -163,6 +176,15 @@ Wykorzystane usługi Amazon AWS
 8.  SNS
 
 9.  ~~WatchCloud~~ - niestety nie mamy uprawnień do zrobienia Eventu
+
+10. boto3 - biblioteka pythonowa
+
+Zmiany względem dokumentacji wstępnej
+===================================
+
+Z powodu uprawnień zamiast *SES* wykorzystany został *SNS*, i funkcja `dailyReport` nie jest wywoływana przez event *WatchCloud*.
+
+Zamiast wykorzystania modelu pytorchowego wykorzystujemy usługę *Amazon AWS Rekognition*.
 
 Autorzy
 ==================
