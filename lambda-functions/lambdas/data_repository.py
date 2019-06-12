@@ -28,12 +28,10 @@ def get_statistics_data(projectionExpresion: str = None):
     key = {
         STATISTICS_DATA_PRIMARY_KEY: STATISTICS_DATA_PRIMARY_KEY_VALUE
     }
-    if projectionExpresion is None:
-        response = table.get_item(Key=key)
-    else:
-        response = table.get_item(
-            Key=key, ProjectionExpression=projectionExpresion)
 
+    response = table.get_item(Key=key) if projectionExpresion is None else table.get_item(
+            Key=key, ProjectionExpression=projectionExpresion)
+    
     return response.get("Item", {
         STATISTICS_DATA_PRIMARY_KEY: STATISTICS_DATA_PRIMARY_KEY_VALUE,
         STATISTICS_DATA_LABELS_KEY: {},
@@ -59,14 +57,10 @@ def get_current_labels_state_of_statistics():
 
     __merge_statistics(sd[STATISTICS_DATA_LABELS_KEY], labels)
 
-    labelArray = []
-    for key in sd[STATISTICS_DATA_LABELS_KEY]:
-        labelArray.append(
-            {"label": key, "count": str(sd[STATISTICS_DATA_LABELS_KEY][key])})
-
-    newLabels = []
-    for key in labels:
-        newLabels.append({"label": key, "count": str(labels[key])})
+    labelArray = [ {"label": key, "count": str(sd[STATISTICS_DATA_LABELS_KEY][key])} for key in sd[STATISTICS_DATA_LABELS_KEY]]
+    
+    newLabels = [{"label": key, "count": str(labels[key])} for key in labels]
+    
     return labelArray, sd, newLabels
 
 
@@ -85,9 +79,8 @@ def count_labels(classifiedImages):
     res = {}
     for ci in classifiedImages:
         for _class in ci.get("labels", []):
-            if(not "Name" in _class):
-                continue
-            res[_class['Name']] = int(res.get(_class['Name'], 0)) + 1
+            if "Name" in _class:
+                res[_class['Name']] = int(res.get(_class['Name'], 0)) + 1
     return res
 
 

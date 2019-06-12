@@ -73,5 +73,5 @@ def lambda_handler(event, context):
                 "Access-Control-Allow-Methods": "POST"
             },
             'statusCode': 400,
-            'body': json.dumps({"error": error, "message": "Somethig went wrong! :c"})
+            'body': json.dumps({"error": error, "message": str(e)})
         }
