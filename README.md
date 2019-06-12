@@ -1,17 +1,5 @@
----
-author:
-- 'Piotr Pasza Storożenko & Mateusz Bieńkowski'
-date: ' r.'
-title: 
-    Architektura Aplikacji Chmu//rowych\
-    Projekt Końcowy -- Dokumentacja
----
-
-Autorzy
-=======================
-Piotr Pasza Storożenko & Mateusz Bieńkowski\
-Architektura Aplikacji Chmurowych\
-Projekt Końcowy - Dokumentacja
+Architektura Aplikacji Chmurowych - Projekt Końcowy - Dokumentacja
+========================
 
 Funkcjonalność aplikacji
 ========================
@@ -19,8 +7,8 @@ Funkcjonalność aplikacji
 -   Strona internetowa klasyfikująca obrazki wgrywane przez
     użytkowników.
 
--   Po wgraniu obrazku, użytkownik dostaje informację o 10 najbardziej
-    prawdopodobnych obiektach, które znajdują się na obrazku.
+-   Po wgraniu obrazku, użytkownik dostaje informację do 10 najbardziej
+    prawdopodobnych etykiet opisujących obrazek.
 
 -   Wyświetlane jest 20 ostatnio klasyfikowanych obrazków.
 
@@ -46,20 +34,20 @@ aplikacji.](final_architecture.png)
 Strona statyczna internetowa
 ----------------------------
 
-Aplikacja jest dostępna przez przeglądarkę. Strona została napisana w
+Aplikacja jest dostępna przez przeglądarkę. Strona została napisana z wykorzystaniem
 *vue.js* i hostowaną na *S3*. Jej wysoka dostępność jest zapewniana
 przez usługę *CloudFront*.
 
 Po wejściu użytkownika na stronę generowana jest jej zawartość. Linki
-obrazków do galerii otrzymywane są poprzez wykonanie zapytania RESTowego
+obrazków do galerii otrzymywane są poprzez wykonanie zapytania RESTowego,
 przez *API Gateway*, które wywołuję funkcję *AWS Lambda*
 pageDataFunction. Funkcja zwraca linki do maksymalnie 20 ostatnio
 wgranych obrazków oraz informację o najczęściej klasyfikowanych
 obiektach.
 
 Po wybraniu obrazka i kliknięciu przycisku classify wykonywane jest
-zapytanie RESTowe przez *API Gateway* i wywoływana jest funkcja *Lambda*
-classifyImage. Funkcja zwraca top 5 obiektów znalezionych na obrazku
+zapytanie RESTowe, przez *API Gateway* i wywoływana jest funkcja *Lambda*
+classifyImage. Funkcja zwraca do 10 etykiet opisujących co jest na obrazku
 wraz z pewnością ich znalezienia.
 
 *Lambda* pageDataFunction
@@ -93,8 +81,9 @@ zostać rozpoznane obiekty. a następnie:
 Funkcja ta generuje raport z klasyfikacji z poprzedniego dnia,
 wywoływana jest przez Event *WatchCloud*. Dzięki temu mechanizmowi, gdy
 użytkownik wchodzi na stronę, nie trzeba zliczać wszystkich elementów w
-bazie w celu wyznaczenia statystyk, a jedynie z ostatniego dnia. Raport
-zapisywany jest w *DynamoDB* oraz wysyłany do administratora poprzez
+bazie w celu wyznaczenia statystyk, a jedynie z ostatniego dnia. 
+Funkcja aktualizuje tabelę *StatisticsData* w *DynamoDB*.
+Następnie wysyła raport do administratora poprzez e-mail i SMS, dzięki usłudze
 *SNS*.
 
 Niestety ze względu na ograniczenia konta, brak możliwości zrobienia
@@ -150,7 +139,7 @@ również na wykorzystanie mechanizmów kontroli wersji do kontroli kodu.
 Kontrola wersji
 ---------------
 
-W celu łatwiejszego zarządzania kodem strony oraz funkcji lambda,
+W celu łatwiejszego zarządzania kodem strony oraz funkcji *Lambda*,
 zostały one umieszczone na GitHubie
 [AWS\_FinalProject](https://github.com/bi3niol/AWS_FinalProject).
 
@@ -174,3 +163,7 @@ Wykorzystane usługi Amazon AWS
 8.  SNS
 
 9.  ~~WatchCloud~~ - niestety nie mamy uprawnień do zrobienia Eventu
+
+Autorzy
+==================
+[Piotr Pasza Storożenko](https://github.com/pstorozenko/) & [Mateusz Bieńkowski](https://github.com/bi3niol/)
