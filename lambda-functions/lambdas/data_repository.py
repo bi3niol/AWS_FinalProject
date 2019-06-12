@@ -53,7 +53,7 @@ def get_current_labels_state_of_statistics():
 
     if len(items) > 0:
         lastResult = max(items, key=lambda x: x[CI_CREATEDON_KEY])
-        sd[STATISTICS_DATA_LAST_SYNC_KEY] = lastResult[CI_CREATEDON_KEY]
+        sd[STATISTICS_DATA_LAST_SYNC_KEY] = str(lastResult[CI_CREATEDON_KEY])
 
     labels = count_labels(items)
 
@@ -62,22 +62,20 @@ def get_current_labels_state_of_statistics():
     labelArray = []
     for key in sd[STATISTICS_DATA_LABELS_KEY]:
         labelArray.append(
-            {"label": key, "count": sd[STATISTICS_DATA_LABELS_KEY][key]})
+            {"label": key, "count": str(sd[STATISTICS_DATA_LABELS_KEY][key])})
 
     newLabels = []
     for key in labels:
-        newLabels.append({"label": key, "count": labels[key]})
+        newLabels.append({"label": key, "count": str(labels[key])})
     return labelArray, sd, newLabels
 
 
 def update_statistics_and_get_daily_data():
     _, currentStateOfStatistics, dailyStatistics = get_current_labels_state_of_statistics()
 
-    # client = boto3.client('dynamodb')
-    # client.put_item(
-    #     TableName=STATISTICS_DATA_TABLE_NAME,
-    #     Item=currentStateOfStatistics
-    # )
+    table = dynamodb.Table(STATISTICS_DATA_TABLE_NAME)
+    print(currentStateOfStatistics)
+    table.put_item(Item=currentStateOfStatistics)
 
     dailyStatistics.sort(key=lambda x: x['count'], reverse=True)
     return dailyStatistics
@@ -89,18 +87,18 @@ def count_labels(classifiedImages):
         for _class in ci.get("labels", []):
             if(not "Name" in _class):
                 continue
-            res[_class['Name']] = res.get(_class['Name'], 0) + 1
+            res[_class['Name']] = int(res.get(_class['Name'], 0)) + 1
     return res
 
 
 def __merge_statistics(statObject, labels):
     for key in labels:
-        statObject[key] = statObject.get(key, 0) + labels[key]
+        statObject[key] = int(statObject.get(key, 0)) + int(labels[key])
 
 
 def get_top_n_labels(n: int = 10):
     labels, _, _ = get_current_labels_state_of_statistics()
-    labels.sort(key=lambda x: x['count'], reverse=True)
+    labels.sort(key=lambda x: int(x['count']), reverse=True)
     nn = min(n, len(labels))
     return labels[0:nn]
 
